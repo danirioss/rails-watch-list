@@ -6,17 +6,24 @@
 
 <div class="d-flex justify-content-center m-5 p-5">
   <div style="width: 70%">
-    <div class="d-flex justify-content-between mb-3">
-      <h3 class="fs-5"><strong>Add a movie</strong></h3>
-      <%= link_to "Create a movie list", bookmarks_new_path, class: "btn btn-flat" %>
+    <div class="d-flex justify-content-end mb-3">
+      <%= link_to "Add a movie",  new_list_bookmark_path(@list), class: "btn btn-flat" %>
     </div>
+  <div>
 
-    <%# <div class="cards">
-      <% @lists.each do |list| %>
-        <%# <div class="card-info" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg)">
-        <%= list.name.capitalize %>
-        <%# </div>
-      <% end %>
-    <%# </div> %>
+    <% @list.movies.each do |movie| %>
+      <div class="card" style="width: 25%;">
+        <img src="<%= movie.poster_url %>" class="card-img-top" alt="Imagem do filme">
+        <div class="card-body">
+          <h5 class="card-title"><%= movie.title %></h5>
+          <h6><%= movie.rating %></h6>
+          <p class="card-text"><%= movie.overview %>
+          <%= link_to "delete",
+            bookmark_path(Bookmark.find_by(movie: movie, list: @list)),
+            data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+        </div>
+      </div>
+    <% end %>
   </div>
+
 </div>
